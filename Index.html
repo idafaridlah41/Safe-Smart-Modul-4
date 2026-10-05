@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul 4: Ruang Digital yang Inklusif & Responsif Gender - Safe & Smart 2026</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            dark: '#0f172a',
+                        },
+                        genderAccent: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        },
+                        tealAccent: {
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .slide-transition {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7c3aed;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white">
+
+    <!-- Top Floating Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-white py-3 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Brand & Modul Badge -->
+            <div class="flex items-center space-x-3">
+                <span class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg shadow-purple-900/40">
+                    Modul 4
+                </span>
+                <div class="hidden sm:block">
+                    <h1 class="text-sm font-bold text-slate-100 truncate max-w-md">Ruang Digital yang Inklusif & Responsif Gender</h1>
+                    <p class="text-[11px] text-purple-300">Safe and Smart 2026 • British Embassy Jakarta & BerdayaBareng</p>
+                </div>
+            </div>
+
+            <!-- Header Controls -->
+            <div class="flex items-center space-x-2 md:space-x-4">
+                <button onclick="toggleOverview()" class="p-2 px-3 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center space-x-2 transition">
+                    <i class="fa-solid fa-border-all text-purple-400"></i>
+                    <span class="hidden md:inline">Overview Mode</span>
+                </button>
+                <button onclick="toggleFullscreen()" class="p-2 text-xs rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition" title="Layar Penuh">
+                    <i id="fullscreen-icon" class="fa-solid fa-expand text-purple-400"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-800 h-1.5 absolute bottom-0 left-0 right-0 overflow-hidden">
+            <div id="progress-bar" class="bg-gradient-to-r from-purple-500 via-indigo-400 to-teal-400 h-full w-0 transition-all duration-300"></div>
+        </div>
+    </header>
+
+    <!-- Main Interactive Slide Display Container -->
+    <main class="flex-grow pt-20 pb-24 px-3 sm:px-6 md:px-12 max-w-7xl mx-auto w-full flex items-center justify-center">
+        
+        <!-- Slide Canvas Wrapper -->
+        <div id="slide-wrapper" class="w-full bg-slate-950 rounded-2xl border border-slate-800/80 shadow-2xl min-h-[78vh] flex flex-col justify-between overflow-hidden relative">
+            
+            <!-- Dynamic Content Slide Area -->
+            <div id="slide-container" class="p-5 sm:p-8 md:p-12 overflow-y-auto max-h-[72vh] text-slate-100">
+                <!-- Slides injected via JS -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Bottom Control Bar -->
+    <footer class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 py-3 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
+            <!-- Quick Jump / Indicator -->
+            <div class="flex items-center space-x-2 text-xs text-slate-400">
+                <span id="slide-counter" class="font-bold text-purple-400 text-sm">1 / 20</span>
+                <span class="hidden sm:inline">• Gunakan Panah <kbd class="px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded border border-slate-700">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded border border-slate-700">→</kbd> Keyboard</span>
+            </div>
+
+            <!-- Slide Navigation Buttons -->
+            <div class="flex items-center space-x-3">
+                <button id="prev-btn" onclick="prevSlide()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed flex items-center space-x-2 transition">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <span>Sebelumnya</span>
+                </button>
+                <button id="next-btn" onclick="nextSlide()" class="px-5 py-2 text-xs font-semibold rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-900/30 flex items-center space-x-2 transition">
+                    <span>Berikutnya</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Overview Modal Grid -->
+    <div id="overview-modal" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl hidden overflow-y-auto p-6 md:p-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-cubes text-purple-400"></i>
+                        Overview Modul & Indeks Slide Modul 4
+                    </h2>
+                    <p class="text-xs md:text-sm text-slate-400">Pilih slide untuk melompat secara langsung ke topik bahasan Modul 4</p>
+                </div>
+                <button onclick="toggleOverview()" class="p-2 text-slate-400 hover:text-white bg-slate-800 rounded-full w-10 h-10 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Thumbnail Grid Container -->
+            <div id="overview-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Presentation Engine & Content -->
+    <script>
+        // Module 4 Complete Content Structure
+        const slidesData = [
+            {
+                title: "Halaman Sampul Modul 4",
+                subtitle: "Ruang Digital yang Inklusif & Responsif Gender",
+                category: "Identitas Program",
+                content: `
+                    <div class="flex flex-col items-center text-center justify-center min-h-[50vh] space-y-6">
+                        <div class="flex flex-wrap justify-center items-center gap-4 mb-2">
+                            <span class="px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold">
+                                <i class="fa-solid fa-venus-mars mr-1"></i> Safe and Smart 2026
+                            </span>
+                            <span class="px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">
+                                Digital Access Programme
+                            </span>
+                        </div>
+                        
+                        <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight max-w-4xl">
+                            Ruang Digital yang <br/>
+                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-indigo-300 to-teal-300">
+                                Inklusif & Responsif Gender
+                            </span>
+                        </h1>
+                        
+                        <p class="text-slate-300 max-w-2xl text-sm sm:text-base leading-relaxed">
+                            Penguatan Literasi dan Pelindungan Anak di Ruang Digital bagi Komunitas Pendidikan di Indonesia
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl text-left mt-6 bg-slate-900/80 p-5 rounded-xl border border-slate-800">
+                            <div>
+                                <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Penyusun & Konsultan Ahli</p>
+                                <p class="text-sm font-bold text-purple-300 mt-1">Nurfadillah, S.Sos., M.Ag.</p>
+                                <p class="text-sm font-bold text-purple-300">Lia Marpaung (Konsultan Ahli)</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-medium uppercase tracking-wider">Editor & Kemitraan</p>
+                                <p class="text-sm font-semibold text-slate-200 mt-1">Rahmi Suci Ramadhani</p>
+                                <p class="text-xs text-slate-400 mt-0.5">British Embassy Jakarta & BerdayaBareng (2026)</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Kata Pengantar & Landasan Kebijakan",
+                subtitle: "Konteks Strategis Penguatan Kapasitas Pendidik di Ruang Digital",
+                category: "Pendahuluan",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-r from-purple-950/60 to-slate-900 p-6 rounded-xl border border-purple-500/30">
+                            <h3 class="text-lg font-bold text-purple-300 flex items-center gap-2">
+                                <i class="fa-solid fa-quote-left text-indigo-400"></i>
+                                Latar Belakang Inisiatif Safe and Smart 2026
+                            </h3>
+                            <p class="text-sm text-slate-300 leading-relaxed mt-2">
+                                Perkembangan teknologi digital membuka ruang belajar luas bagi anak Indonesia, namun juga menghadirkan risiko nyata seperti perundungan siber, paparan konten berbahaya, penipuan online, hingga eksploitasi anak. Guru berada pada posisi paling strategis sebagai orang dewasa yang paling sering berinteraksi dengan murid di luar keluarga.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-900/90 p-5 rounded-xl border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-magnifying-glass-chart text-lg"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-200 text-sm">Temuan Survei Awal</h4>
+                                <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                                    Survei terhadap 184 guru SMP & SMA menunjukkan kesenjangan kapasitas literasi digital dan pelindungan anak online. Modul 4 melengkapi fondasi Modul 1-3 dengan membedah aspek perkembangan, relasi kuasa, dan gender.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900/90 p-5 rounded-xl border border-slate-800">
+                                <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-gavel text-lg"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-200 text-sm">Dukungan Regulasi PP TUNAS</h4>
+                                <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                                    Langkah konkret mendukung Peraturan Pemerintah No. 17 Tahun 2025 (PP TUNAS) tentang Tata Kelola Sistem Elektronik dalam Pelindungan Anak untuk mewujudkan ekosistem sekolah yang inklusif dan aman.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Ringkasan Eksekutif & Pergeseran Cara Pandang",
+                subtitle: "The Core Design Shift: Dari Fokus Risiko Eksternal menuju Pengalaman Murid",
+                category: "Ringkasan & Tujuan",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                            <h3 class="text-sm font-bold text-purple-400 uppercase tracking-wider mb-2">Ringkasan Eksekutif Modul 4</h3>
+                            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                Modul 4 membekali guru dengan perspektif inklusif dan responsif gender (GEDSI). Guru diajak menggeser fokus pertanyaan: dari sekadar <em>"Bahaya teknologi apa yang mengancam murid?"</em> menjadi <em>"Siapa murid kita di ruang digital, apa yang membuat mereka rentan, dan bagaimana kita mendampingi mereka secara adil, inklusif, serta peka trauma?"</em>
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-bold text-indigo-400 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-bullseye"></i> Target Capaian Pembelajaran Peserta
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div class="flex items-start gap-3 bg-slate-900/60 p-3.5 rounded-lg border border-slate-800">
+                                    <i class="fa-solid fa-check-circle text-purple-400 mt-1"></i>
+                                    <span class="text-xs text-slate-200">Menjelaskan karakteristik perkembangan remaja SMP/SMA tanpa menggeneralisasi.</span>
+                                </div>
+                                <div class="flex items-start gap-3 bg-slate-900/60 p-3.5 rounded-lg border border-slate-800">
+                                    <i class="fa-solid fa-check-circle text-purple-400 mt-1"></i>
+                                    <span class="text-xs text-slate-200">Menganalisis hubungan agensi, persetujuan (consent), dan relasi kuasa murid.</span>
+                                </div>
+                                <div class="flex items-start gap-3 bg-slate-900/60 p-3.5 rounded-lg border border-slate-800">
+                                    <i class="fa-solid fa-check-circle text-purple-400 mt-1"></i>
+                                    <span class="text-xs text-slate-200">Menerapkan First Response Protocol yang peka trauma dan tanpa menyalahkan korban.</span>
+                                </div>
+                                <div class="flex items-start gap-3 bg-slate-900/60 p-3.5 rounded-lg border border-slate-800">
+                                    <i class="fa-solid fa-check-circle text-purple-400 mt-1"></i>
+                                    <span class="text-xs text-slate-200">Memahami interseksionalitas (gender, disabilitas, sosial) dan Design Thinking aksi sekolah.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Peta Materi & Alur Pembelajaran 5 Tahap",
+                subtitle: "Kombinasi Pembelajaran Asynchronous, Sesi Online, dan Sesi Offline Praktik",
+                category: "Alur Program",
+                content: `
+                    <div class="space-y-3">
+                        <p class="text-xs text-slate-400 mb-1">Struktur alur belajar Modul 4 yang terintegrasi dengan Handout & Panduan Fasilitasi:</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                            <div class="bg-slate-900 p-3.5 rounded-xl border-l-4 border-purple-500 border-r border-t border-b border-slate-800">
+                                <span class="text-[10px] uppercase font-bold text-purple-400">Tahap 1 (Online)</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Bagian I: Perkembangan Remaja Digital</h4>
+                                <p class="text-slate-400 mt-1">Kontradiksi otak remaja (Limbik vs PFC), 3 dimensi diri (intelektual, emosi, tubuh), & agensi.</p>
+                            </div>
+
+                            <div class="bg-slate-900 p-3.5 rounded-xl border-l-4 border-indigo-500 border-r border-t border-b border-slate-800">
+                                <span class="text-[10px] uppercase font-bold text-indigo-400">Tahap 2 (Online)</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Bagian II: Persetujuan & Peran Murid</h4>
+                                <p class="text-slate-400 mt-1">Consent architecture, UU PDP No. 27/2022, context collapse, & simultaneity problem.</p>
+                            </div>
+
+                            <div class="bg-slate-900 p-3.5 rounded-xl border-l-4 border-teal-500 border-r border-t border-b border-slate-800">
+                                <span class="text-[10px] uppercase font-bold text-teal-400">Tahap 3 (Online)</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Bagian III: Risiko AI & Kedaulatan Intelektual</h4>
+                                <p class="text-slate-400 mt-1">Deepfake, disinformasi algoritma, pencurian identitas, & literasi kritis pedagogis.</p>
+                            </div>
+
+                            <div class="bg-slate-900 p-3.5 rounded-xl border-l-4 border-rose-500 border-r border-t border-b border-slate-800">
+                                <span class="text-[10px] uppercase font-bold text-rose-400">Tahap 4 (Offline)</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Bagian IV: KBGO & Respons Peka Trauma</h4>
+                                <p class="text-slate-400 mt-1">Anatomi KBGO, bahaya victim-blaming, digital bystander effect, & First Response Protocol.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-3.5 rounded-xl border-l-4 border-amber-500 border-r border-t border-b border-slate-800 text-xs">
+                            <span class="text-[10px] uppercase font-bold text-amber-400">Tahap 5 (Offline Kelompok)</span>
+                            <h4 class="font-bold text-slate-100 text-sm mt-0.5">Bagian V: Kerentanan Struktural, GEDSI, & Design Thinking</h4>
+                            <p class="text-slate-400 mt-1">Interseksionalitas (Gender, Disabilitas, Akses), Whole-School Approach, & Perancangan Aksi Nyata.</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN I: Kontradiksi Otak Remaja SMP vs SMA",
+                subtitle: "Memahami Perkembangan Neurobiologis Remaja di Ruang Digital",
+                category: "Bagian I - Perkembangan Remaja",
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-purple-950/80 via-slate-900 to-indigo-950/80 p-4 rounded-xl border border-purple-500/30">
+                            <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Prinsip Neurobiologi Remaja</h4>
+                            <p class="text-xs text-slate-300 mt-1">
+                                Perkembangan otak remaja ditandai ketidakseimbangan perkembangan antara <strong>Sistem Limbik</strong> (Pusat Emosi & Imbalan) yang matang lebih cepat, dan <strong>Prefrontal Cortex (PFC)</strong> (Pusat Logika & Kendali Diri) yang baru matang sempurna pada usia 25 tahun.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Remaja Awal (SMP) -->
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-purple-500/50 transition">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="p-1.5 rounded bg-purple-500/20 text-purple-300 text-xs font-bold">1. Remaja Awal (SMP)</span>
+                                </div>
+                                <h4 class="font-bold text-slate-100 text-sm">"Gas Emosi Tanpa Rem Logika"</h4>
+                                <ul class="text-xs text-slate-400 mt-2 space-y-1.5 list-disc list-inside">
+                                    <li>Sangat rentan terhadap dorongan impulsif & pencarian sensasi online.</li>
+                                    <li>Mendorong tindakan nekat (tantangan tren berbahaya, membagikan konten pribadi) demi pengakuan kelompok.</li>
+                                    <li>Belum mampu memperhitungkan konsekuensi jangka panjang dari jejak digital.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Remaja Lanjut (SMA) -->
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 hover:border-indigo-500/50 transition">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="p-1.5 rounded bg-indigo-500/20 text-indigo-300 text-xs font-bold">2. Remaja Lanjut (SMA)</span>
+                                </div>
+                                <h4 class="font-bold text-slate-100 text-sm">"Pencarian Jati Diri & Candu Pujian Digital"</h4>
+                                <ul class="text-xs text-slate-400 mt-2 space-y-1.5 list-disc list-inside">
+                                    <li>PFC mulai berkembang, namun sensitivitas terhadap umpan balik sosial sangat tinggi.</li>
+                                    <li>Kebutuhan akan validasi (like, comment, followers) memengaruhi harga diri (self-esteem).</li>
+                                    <li>Eksperimentasi identitas gender dan peran sosial di media sosial.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN I: Tiga Dimensi Kesadaran Diri & Agensi",
+                subtitle: "Menghubungkan Pengalaman Diri dengan Keputusan Bermedia Digital",
+                category: "Bagian I - Perkembangan Remaja",
+                content: `
+                    <div class="space-y-4">
+                        <p class="text-xs text-slate-300">Pengalaman murid di ruang digital memengaruhi 3 dimensi kesadaran diri secara simultan:</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="w-8 h-8 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold mb-2">
+                                    <i class="fa-solid fa-brain"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-200 text-sm">1. Dimensi Intelektual</h4>
+                                <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                    Kemampuan bernalar kritis, menyaring informasi, menganalisis hoaks, dan memahami risiko manipulasi algoritma.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="w-8 h-8 rounded bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold mb-2">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-200 text-sm">2. Dimensi Emosional</h4>
+                                <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                    Regulasi emosi saat menghadapi perundungan, kecemasan sosial (FOMO), dan penguatan resiliensi psikologis.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="w-8 h-8 rounded bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold mb-2">
+                                    <i class="fa-solid fa-child-body"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-200 text-sm">3. Dimensi Tubuh</h4>
+                                <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                    Kesadaran akan batasan tubuh (body autonomy), persepsi citra tubuh (body image), dan hak privasi fisik-digital.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-indigo-950/50 p-4 rounded-xl border border-indigo-500/30 text-xs text-slate-300">
+                            <strong class="text-indigo-300">Jembatan Logika Agensi:</strong> Kesadaran pada ketiga dimensi ini menumbuhkan <em>agensi murid</em>—kemampuan anak untuk bertindak secara mandiri, menetapkan batasan, dan berkata "tidak" terhadap tekanan sebaya atau kekerasan.
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Ringkasan & Refleksi Bagian I",
+                subtitle: "Latihan Evaluasi Diri Pemahaman Perkembangan Remaja",
+                category: "Refleksi Bagian I",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-purple-950/40 p-4 rounded-xl border border-purple-500/30">
+                            <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Poin Kunci Bagian I</h4>
+                            <ul class="text-xs text-slate-300 space-y-1.5 mt-2 list-disc list-inside">
+                                <li>Perilaku murid di ruang digital merupakan wujud proses pencarian identitas dan maturasi otak.</li>
+                                <li>Pendekatan disiplin yang menghakimi/menghukum tanpa memahami perkembangan neurobiologis akan mendorong murid menyembunyikan masalah.</li>
+                                <li>Guru bertindak sebagai jembatan yang memperkuat agensi dan regulasi emosi murid.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                            <h4 class="text-sm font-bold text-purple-400 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-pen-to-square"></i> Pertanyaan Refleksi Peserta Pelatihan
+                            </h4>
+                            <div class="space-y-3 text-xs text-slate-300">
+                                <div class="p-3 bg-slate-950 rounded-lg border border-slate-800">
+                                    <strong>1. Observasi Kelas:</strong> Pernahkah Anda menjumpai perbedaan respons antara murid SMP dan SMA saat menghadapi isu di media sosial? Perilaku impulsif apa yang paling dominan?
+                                </div>
+                                <div class="p-3 bg-slate-950 rounded-lg border border-slate-800">
+                                    <strong>2. Pendampingan Guru:</strong> Bagaimana selama ini Anda merespons murid yang mengalami kecemasan akibat komentar negatif tentang bentuk tubuhnya (body image) di dunia maya?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN II: Memahami Persetujuan (Consent) Digital",
+                subtitle: "Consent Architecture dan Relevansinya dengan UU Pelindungan Data Pribadi (UU PDP)",
+                category: "Bagian II - Persetujuan",
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <h4 class="text-sm font-bold text-purple-400 mb-2">Konsep Consent Architecture (Arsitektur Persetujuan)</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Persetujuan (consent) bukan sekadar menekan tombol "Setuju" atau jawaban "Ya/Tidak" sederhana. Persetujuan sejati mencakup 3 aspek utuh: <strong>Pikiran</strong> (pemahaman penuh tanpa tipu daya), <strong>Emosi</strong> (tanpa paksaan/manipulasi relasi kuasa), dan <strong>Tubuh</strong> (hak atas foto, video, dan data fisik).
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="flex items-center gap-2 text-indigo-400 font-bold text-sm mb-2">
+                                    <i class="fa-solid fa-scale-balanced"></i> Relevansi UU PDP (UU No. 27/2022)
+                                </div>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    UU Pelindungan Data Pribadi menegaskan bahwa pemrosesan data anak membutuhkan persetujuan orang tua/wali serta perlindungan khusus atas data spesifik (data biometrik, rekam medis, dll.).
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="flex items-center gap-2 text-purple-400 font-bold text-sm mb-2">
+                                    <i class="fa-solid fa-hand-halved"></i> Prinsip Persetujuan yang Sah (FRIES)
+                                </div>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Persetujuan harus bersifat <em>Freely given</em> (sukarela), <em>Reversible</em> (dapat ditarik), <em>Informed</em> (paham dampak), <em>Enthusiastic</em> (tanpa tekanan), dan <i>Specific</i> (tujuan jelas).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN II: Lingkungan Digital & Kompleksitas Peran Murid",
+                subtitle: "Visibility, Exposure, Context Collapse, dan The Simultaneity Problem",
+                category: "Bagian II - Persetujuan",
+                content: `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="bg-slate-900 p-3.5 rounded-lg border border-slate-800">
+                                <h4 class="font-bold text-purple-400 text-xs uppercase">Visibility & Exposure</h4>
+                                <p class="text-xs text-slate-400 mt-1">Konten digital mudah dilihat luas dan bertahan lama, meningkatkan kerapuhan privasi murid.</p>
+                            </div>
+                            <div class="bg-slate-900 p-3.5 rounded-lg border border-slate-800">
+                                <h4 class="font-bold text-indigo-400 text-xs uppercase">Context Collapse</h4>
+                                <p class="text-xs text-slate-400 mt-1">Batas antara dunia pribadi, sekolah, dan publik lebur, sehingga lelucon internal bisa disalahartikan publik.</p>
+                            </div>
+                            <div class="bg-slate-900 p-3.5 rounded-lg border border-slate-800">
+                                <h4 class="font-bold text-teal-400 text-xs uppercase">Relasi Kuasa</h4>
+                                <p class="text-xs text-slate-400 mt-1">Ketimpangan posisi antara guru-murid, senior-yunior, atau populer-terisolasi memengaruhi kebebasan berkata tidak.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-purple-950/80 to-slate-900 p-4 rounded-xl border border-purple-500/40">
+                            <h4 class="font-bold text-purple-300 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-arrows-split-up-and-left"></i> The Simultaneity Problem (Dinamika Peran Ganda Murid)
+                            </h4>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Seorang murid dapat berada dalam posisi sebagai <strong>korban</strong> sekaligus melakukan tindakan yang <strong>merugikan orang lain (pelaku)</strong> dalam rangkaian peristiwa yang sama (misal: korban perundungan yang menyebarkan kembali foto rahasia teman untuk membela diri).
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Ringkasan & Refleksi Bagian II",
+                subtitle: "Latihan Evaluasi Diri Persetujuan dan Kompleksitas Kasus Murid",
+                category: "Refleksi Bagian II",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-purple-950/40 p-4 rounded-xl border border-purple-500/30">
+                            <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Poin Kunci Bagian II</h4>
+                            <ul class="text-xs text-slate-300 space-y-1.5 mt-2 list-disc list-inside">
+                                <li>Persetujuan tidak sah apabila diperoleh di bawah tekanan relasi kuasa atau manipulasi emosi.</li>
+                                <li>Context collapse sering menjadi pemicu utama viralnya kasus perundungan digital di sekolah.</li>
+                                <li>Menghadapi <em>simultaneity problem</em> membutuhkan penanganan objektif tanpa langsung memencat atau melabeli murid sebagai "anak nakal".</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                            <h4 class="text-sm font-bold text-indigo-400 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-pen-to-square"></i> Pertanyaan Refleksi Peserta Pelatihan
+                            </h4>
+                            <div class="space-y-3 text-xs text-slate-300">
+                                <div class="p-3 bg-slate-950 rounded-lg border border-slate-800">
+                                    <strong>Studi Kasus Sederhana:</strong> Apakah guru/sekolah selalu meminta izin (consent) yang jelas sebelum mendokumentasikan dan mengunggah foto wajah murid ke media sosial sekolah?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN III: Risiko Digital Berbasis AI & Kedaulatan Intelektual",
+                subtitle: "Manipulasi Deepfake, Mis/Disinformasi, dan Eksploitasi Algoritma",
+                category: "Bagian III - Risiko AI",
+                content: `
+                    <div class="space-y-4">
+                        <p class="text-xs text-slate-300">Perkembangan AI Generatif membawa ancaman baru yang menyasar identitas dan integritas murid:</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Deepfake -->
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="flex items-center gap-2 text-rose-400 font-bold text-sm mb-2">
+                                    <i class="fa-solid fa-user-ninja"></i> Manipulasi Deepfake & AI
+                                </div>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Pengubahan foto biasa murid menjadi konten eksplisit/intim non-konsensual (NCII) menggunakan aplikasi AI. Hal ini merusak martabat dan reputasi korban secara drastis.
+                                </p>
+                            </div>
+
+                            <!-- Algoritma & Echo Chamber -->
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="flex items-center gap-2 text-amber-400 font-bold text-sm mb-2">
+                                    <i class="fa-solid fa-arrows-spin"></i> Algoritma & Ruang Gema (Echo Chamber)
+                                </div>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Sistem rekomendasi platform mengurung murid dalam gelembung informasi tunggal, memperkuat prasangka gender, stereotip, dan ujaran kebencian.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs text-slate-300">
+                            <strong class="text-purple-400 block mb-1">Misinformasi vs Disinformasi:</strong>
+                            <span class="text-slate-400">Misinformasi adalah informasi salah yang disebar tanpa niat jahat, sedangkan Disinformasi disebarkan secara sengaja untuk menyesatkan atau merugikan pihak lain.</span>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN III: Pencurian Identitas & Literasi Kritis Pedagogis",
+                subtitle: "Perlindungan Kedaulatan Intelektual dan Identitas Digital Murid",
+                category: "Bagian III - Risiko AI",
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-slate-200 text-sm mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-id-card text-teal-400"></i> Pencurian & Penyalahgunaan Identitas Digital
+                            </h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Pembuatan akun palsu (impersonation) atas nama murid atau guru untuk melakukan penipuan, pinjaman online ilegal, atau menjatuhkan kredibilitas. Murid perlu dilatih menjaga kerahasiaan data pribadi (NIK, tempat lahir, nama ibu kandung, lokasi real-time).
+                            </p>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-purple-950/60 via-slate-900 to-indigo-950/60 p-5 rounded-xl border border-purple-500/30">
+                            <h4 class="font-bold text-purple-300 text-sm mb-2">Literasi Kritis Pedagogis dalam Kelas</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Guru tidak hanya mengajarkan cara memakai gawai, tetapi mendorong murid mempertanyakan: <em>"Siapa pembuat konten ini?", "Apa motif di balik algoritma ini?", "Siapa yang diuntungkan dan dirugikan dari narasi ini?"</em>
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Ringkasan & Refleksi Bagian III",
+                subtitle: "Latihan Evaluasi Diri Risiko AI dan Kedaulatan Intelektual",
+                category: "Refleksi Bagian III",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-purple-950/40 p-4 rounded-xl border border-purple-500/30">
+                            <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Poin Kunci Bagian III</h4>
+                            <ul class="text-xs text-slate-300 space-y-1.5 mt-2 list-disc list-inside">
+                                <li>Kemajuan AI menuntut respon cepat sekolah dalam melindungi foto & identitas pribadi siswa.</li>
+                                <li>Literasi kritis pedagogis adalah perisai utama murid dari manipulasi disinformasi dan eksploitasi algoritma.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                            <h4 class="text-sm font-bold text-purple-400 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-pen-to-square"></i> Pertanyaan Refleksi Peserta Pelatihan
+                            </h4>
+                            <div class="space-y-3 text-xs text-slate-300">
+                                <div class="p-3 bg-slate-950 rounded-lg border border-slate-800">
+                                    <strong>1. Kesiapan Sekolah:</strong> Apabila ada kasus penyebaran foto deepfake yang melibatkan murid di sekolah Anda, apakah sekolah sudah memiliki langkah penanganan awal?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN IV: Kekerasan Digital & KBGO Peka Trauma",
+                subtitle: "Anatomi Kekerasan Berbasis Gender Online & Prinsip Trauma-Informed Response",
+                category: "Bagian IV - KBGO & Peka Trauma",
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-rose-400 text-sm mb-2">Anatomi KBGO (Kekerasan Berbasis Gender Online)</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Kekerasan yang difasilitasi teknologi yang menyasar seseorang berdasarkan gender atau seksualitasnya (misal: doxxing, cyberstalking, pemerasan seksual/sextortion, pelecehan verbal berbasis gender, penyebaran konten intim tanpa izin).
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Trauma Informed Response -->
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="flex items-center gap-2 text-purple-400 font-bold text-sm mb-2">
+                                    <i class="fa-solid fa-heart-pulse"></i> Trauma-Informed Response
+                                </div>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Pendekatan yang mengedepankan rasa aman fisik & emosional korban, mendengarkan tanpa menghakimi, menjaga kerahasiaan, dan tidak memicu trauma ulang (retraumatization).
+                                </p>
+                            </div>
+
+                            <!-- Victim Blaming -->
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <div class="flex items-center gap-2 text-amber-400 font-bold text-sm mb-2">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> Bahaya Victim-Blaming
+                                </div>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Menghindari sikap menyalahkan korban (seperti: <em>"Lagian kenapa kamu kirim foto itu?"</em>). Menyalahkan korban menutup pintu pengaduan anak-anak lain yang membutuhkan pertolongan.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN IV: Digital Bystander Effect & First Response Protocol",
+                subtitle: "Peran Saksi Digital, Budaya Spill, dan Protokol Pertolongan Pertama Sekolah",
+                category: "Bagian IV - KBGO & Peka Trauma",
+                content: `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <h4 class="font-bold text-purple-400 text-xs uppercase mb-1">The Digital Bystander Effect</h4>
+                                <p class="text-xs text-slate-400">Kecenderungan saksi online untuk diam dan menganggap orang lain akan menolong. Murid perlu dilatih menjadi <em>Active Bystander</em> yang berani melapor atau mendukung korban.</p>
+                            </div>
+
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <h4 class="font-bold text-indigo-400 text-xs uppercase mb-1">Bahaya Budaya "Spill" / Viral</h4>
+                                <p class="text-xs text-slate-400">Menyebarkan kasus ke media sosial demi keadilan jalanan sering kali justru memperluas dampak trauma dan merusak masa depan anak.</p>
+                            </div>
+                        </div>
+
+                        <!-- First Response Protocol Table -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-emerald-400 text-xs uppercase tracking-wider mb-2">Protokol Respons Pertama Guru (First Response Protocol)</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-xs">
+                                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                                    <strong class="text-purple-300 block mb-1">1. Amankan Korban</strong>
+                                    <span class="text-slate-400">Dengarkan di ruang privat, validasi emosi, pastikan fisik selamat.</span>
+                                </div>
+                                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                                    <strong class="text-indigo-300 block mb-1">2. Amankan Bukti</strong>
+                                    <span class="text-slate-400">Simpan tangkapan layar (screenshot), URL, & metadata tanpa menyebar ulang.</span>
+                                </div>
+                                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                                    <strong class="text-teal-300 block mb-1">3. Jaga Rahasia</strong>
+                                    <span class="text-slate-400">Batasi informasi hanya pada tim penanganan resmi (TPPK/BK).</span>
+                                </div>
+                                <div class="p-2.5 bg-slate-950 rounded border border-slate-800">
+                                    <strong class="text-emerald-300 block mb-1">4. Rujukan Ahli</strong>
+                                    <span class="text-slate-400">Hubungi layanan psikologi, UPTD PPA, atau lembaga hukum jika diperlukan.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Ringkasan & Refleksi Bagian IV",
+                subtitle: "Latihan Evaluasi Diri Penanganan Kasus KBGO",
+                category: "Refleksi Bagian IV",
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-purple-950/40 p-4 rounded-xl border border-purple-500/30">
+                            <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Poin Kunci Bagian IV</h4>
+                            <ul class="text-xs text-slate-300 space-y-1.5 mt-2 list-disc list-inside">
+                                <li>Penyelesaian kasus kekerasan digital wajib mengutamakan pemulihan korban dan perlindungan kerahasiaan anak.</li>
+                                <li>Membangun budaya <em>active bystander</em> di lingkungan sekolah sangat efektif mencegah eskalasi perundungan siber.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                            <h4 class="text-sm font-bold text-indigo-400 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-pen-to-square"></i> Pertanyaan Refleksi Peserta Pelatihan
+                            </h4>
+                            <div class="space-y-3 text-xs text-slate-300">
+                                <div class="p-3 bg-slate-950 rounded-lg border border-slate-800">
+                                    <strong>Evaluasi Diri:</strong> Kalimat pertama apa yang biasanya refleks Anda ucapkan saat ada murid yang datang melapor bahwa foto pribadinya tersebar? Apakah sudah bebas dari nada menyalahkan?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN V: Kerentanan Struktural & Perspektif GEDSI",
+                subtitle: "Interseksionalitas: Gender, Disabilitas, dan Inklusi Sosial dalam Pelindungan Anak",
+                category: "Bagian V - Kerentanan Struktural",
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-purple-950/80 via-slate-900 to-indigo-950/80 p-5 rounded-xl border border-purple-500/30">
+                            <h4 class="text-sm font-bold text-purple-300 mb-1">Prinsip Interseksionalitas (GEDSI)</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Kerentanan anak di ruang digital tidak bersifat tunggal. Faktor <strong>gender, disabilitas, latar belakang sosial-ekonomi, dan lokasi geografis</strong> saling beririsan sehingga menciptakan tingkat kerentanan berlapis.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <h5 class="font-bold text-purple-400 mb-1"><i class="fa-solid fa-venus-mars mr-1"></i> Kerentanan Gender</h5>
+                                <p class="text-slate-400">Anak perempuan lebih sering menjadi sasaran pelecehan seksual online & pembuktian standar kecantikan irasional.</p>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <h5 class="font-bold text-indigo-400 mb-1"><i class="fa-solid fa-wheelchair mr-1"></i> Anak Disabilitas</h5>
+                                <p class="text-slate-400">Menghadapi hambatan aksesibilitas fitur keamanan serta risiko manipulasi/penipuan yang lebih tinggi akibat keterbatasan interaksi.</p>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <h5 class="font-bold text-teal-400 mb-1"><i class="fa-solid fa-coins mr-1"></i> Faktor Sosial-Ekonomi</h5>
+                                <p class="text-slate-400">Keterbatasan perangkat milik bersama keluarga meningkatkan risiko kebocoran data dan minimnya pendampingan orang tua.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "BAGIAN V: Whole-School Approach & Design Thinking",
+                subtitle: "Menerjemahkan Analisis Kerentanan Menjadi Aksi Nyata Sekolah",
+                category: "Bagian V - Kerentanan Struktural",
+                content: `
+                    <div class="space-y-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-slate-200 text-sm mb-2">Pendekatan Sekolah Menyeluruh (Whole-School Approach)</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Pelindungan anak di ruang digital bukan tugas tunggal Guru BK atau Guru IT. Diperlukan sinergi antara Kebijakan Sekolah, Kurikulum Pembelajaran, Budaya Sekolah, Pelatihan Tendik, serta Kemitraan Orang Tua & Komunitas.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-purple-400 text-xs uppercase tracking-wider mb-2">Tahapan Design Thinking Aksi Sekolah</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-center text-xs">
+                                <div class="p-2 bg-slate-950 rounded border border-slate-800">
+                                    <span class="font-bold text-purple-300 block">1. Empathize</span>
+                                    <span class="text-[10px] text-slate-400">Pahami kebutuhan murid</span>
+                                </div>
+                                <div class="p-2 bg-slate-950 rounded border border-slate-800">
+                                    <span class="font-bold text-indigo-300 block">2. Define</span>
+                                    <span class="text-[10px] text-slate-400">Rumuskan akar masalah</span>
+                                </div>
+                                <div class="p-2 bg-slate-950 rounded border border-slate-800">
+                                    <span class="font-bold text-teal-300 block">3. Ideate</span>
+                                    <span class="text-[10px] text-slate-400">Gagas solusi inovatif</span>
+                                </div>
+                                <div class="p-2 bg-slate-950 rounded border border-slate-800">
+                                    <span class="font-bold text-emerald-300 block">4. Prototype</span>
+                                    <span class="text-[10px] text-slate-400">Buat draf program/SOP</span>
+                                </div>
+                                <div class="p-2 bg-slate-950 rounded border border-slate-800">
+                                    <span class="font-bold text-amber-300 block">5. Test</span>
+                                    <span class="text-[10px] text-slate-400">Uji coba & evaluasi</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "PENUTUP, Komitmen Aksi, & Glosarium",
+                subtitle: "Rangkuman Akhir dan Istilah Kunci Modul 4",
+                category: "Penutup",
+                content: `
+                    <div class="space-y-5">
+                        <div class="bg-slate-900 p-5 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-purple-400 text-sm mb-2">Refleksi & Komitmen Aksi Peserta Pelatihan</h4>
+                            <p class="text-xs text-slate-300 mb-3">Tuliskan komitmen aksi nyata yang akan Anda wujudkan di sekolah:</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                <div class="p-3 bg-slate-950 rounded-lg border border-slate-800">
+                                    <span class="text-purple-300 font-bold block mb-1">Komitmen Responsif Gender & Inklusi</span>
+                                    <p class="text-slate-400 italic">"Saya akan memastikan kelas saya menjadi ruang aman di mana semua murid, tanpa membedakan gender dan kemampuan, didengar perilakunya tanpa diskriminasi..."</p>
+                                </div>
+                                <div class="p-3 bg-slate-950 rounded-lg border border-slate-800">
+                                    <span class="text-indigo-300 font-bold block mb-1">Komitmen Protokol Respons</span>
+                                    <p class="text-slate-400 italic">"Saya akan menerapkan First Response Protocol yang peka trauma dan menghentikan kebiasaan menyalahkan korban jika terjadi kasus KBGO..."</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-slate-200 text-xs uppercase tracking-wider mb-2">Glosarium Ringkas Modul 4</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <div><strong class="text-purple-300">GEDSI:</strong> Gender Equality, Disability, and Social Inclusion</div>
+                                <div><strong class="text-purple-300">KBGO:</strong> Kekerasan Berbasis Gender Online</div>
+                                <div><strong class="text-purple-300">Context Collapse:</strong> Leburnya batas ruang privat & publik</div>
+                                <div><strong class="text-purple-300">UU PDP:</strong> UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "Referensi & Profil Pengembang Modul 4",
+                subtitle: "Safe and Smart 2026 • Digital Access Programme British Embassy Jakarta",
+                category: "Profil & Referensi",
+                content: `
+                    <div class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <h4 class="font-bold text-purple-300 text-sm">Nurfadillah, S.Sos., M.Ag.</h4>
+                                <p class="text-xs text-slate-400 mt-1">Penyusun Utama Modul 4 Safe & Smart 2026. Pakar gender, inklusi sosial, dan literasi media digital masyarakat.</p>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                <h4 class="font-bold text-indigo-300 text-sm">Lia Marpaung</h4>
+                                <p class="text-xs text-slate-400 mt-1">Konsultan Ahli Modul 4 Safe & Smart 2026. Praktisi senior pelindungan anak, penanganan kekerasan berbasis gender, dan kebijakan publik.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center space-y-2">
+                            <p class="text-xs text-slate-400">Program Kelolaan:</p>
+                            <p class="text-sm font-bold text-slate-200">Digital Access Programme - British Embassy Jakarta & BerdayaBareng (2026)</p>
+                            <div class="flex justify-center items-center gap-4 text-xs text-purple-400 pt-2">
+                                <span><i class="fa-solid fa-globe mr-1"></i> BerdayaBareng.com</span>
+                                <span><i class="fa-solid fa-shield-halved mr-1"></i> safeandsmart.id</span>
+                                <span><i class="fa-brands fa-linkedin mr-1"></i> @BerdayaBareng</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // State Management
+        let currentSlide = 0;
+
+        // DOM Elements
+        const slideContainer = document.getElementById('slide-container');
+        const slideCounter = document.getElementById('slide-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const overviewModal = document.getElementById('overview-modal');
+        const overviewGrid = document.getElementById('overview-grid');
+
+        // Render Current Slide
+        function renderSlide() {
+            const slide = slidesData[currentSlide];
+            
+            slideContainer.innerHTML = `
+                <div class="space-y-6 slide-transition">
+                    <!-- Category Badge & Header -->
+                    <div class="border-b border-slate-800/80 pb-4">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider">
+                                ${slide.category}
+                            </span>
+                            <span class="text-xs text-slate-500">• Slide ${currentSlide + 1} dari ${slidesData.length}</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">${slide.title}</h2>
+                        <p class="text-xs sm:text-sm text-purple-300 font-medium mt-1">${slide.subtitle}</p>
+                    </div>
+
+                    <!-- Slide Main Body -->
+                    <div class="py-2">
+                        ${slide.content}
+                    </div>
+                </div>
+            `;
+
+            // Update Controls & Counters
+            slideCounter.textContent = `${currentSlide + 1} / ${slidesData.length}`;
+            progressBar.style.width = `${((currentSlide + 1) / slidesData.length) * 100}%`;
+
+            // Button Disable States
+            prevBtn.disabled = currentSlide === 0;
+            if (currentSlide === slidesData.length - 1) {
+                nextBtn.innerHTML = `<span>Selesai</span> <i class="fa-solid fa-check ml-1"></i>`;
+            } else {
+                nextBtn.innerHTML = `<span>Berikutnya</span> <i class="fa-solid fa-chevron-right ml-1"></i>`;
+            }
+
+            // Scroll Slide content to top
+            slideContainer.scrollTop = 0;
+        }
+
+        // Navigation Functions
+        function nextSlide() {
+            if (currentSlide < slidesData.length - 1) {
+                currentSlide++;
+                renderSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            renderSlide();
+            if (!overviewModal.classList.contains('hidden')) {
+                toggleOverview();
+            }
+        }
+
+        // Populate Overview Grid
+        function populateOverview() {
+            overviewGrid.innerHTML = '';
+            slidesData.forEach((slide, idx) => {
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-xl border text-left cursor-pointer transition-all duration-200 ${
+                    idx === currentSlide 
+                    ? 'bg-purple-950/80 border-purple-500 ring-2 ring-purple-500/50' 
+                    : 'bg-slate-900 border-slate-800 hover:border-slate-700 hover:bg-slate-850'
+                }`;
+                card.onclick = () => goToSlide(idx);
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded ${idx === currentSlide ? 'bg-purple-600 text-white' : 'bg-slate-800 text-slate-400'}">
+                            Slide ${idx + 1}
+                        </span>
+                        <span class="text-[10px] text-purple-300 font-semibold">${slide.category}</span>
+                    </div>
+                    <h4 class="text-xs font-bold text-slate-200 line-clamp-1">${slide.title}</h4>
+                    <p class="text-[11px] text-slate-400 line-clamp-2 mt-1">${slide.subtitle}</p>
+                `;
+                overviewGrid.appendChild(card);
+            });
+        }
+
+        function toggleOverview() {
+            if (overviewModal.classList.contains('hidden')) {
+                populateOverview();
+                overviewModal.classList.remove('hidden');
+            } else {
+                overviewModal.classList.add('hidden');
+            }
+        }
+
+        // Toggle Fullscreen
+        function toggleFullscreen() {
+            const icon = document.getElementById('fullscreen-icon');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting fullscreen: ${err.message}`);
+                });
+                icon.className = "fa-solid fa-compress text-purple-400";
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    icon.className = "fa-solid fa-expand text-purple-400";
+                }
+            }
+        }
+
+        // Keyboard Shortcuts Handler
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'Escape') {
+                if (!overviewModal.classList.contains('hidden')) {
+                    toggleOverview();
+                }
+            }
+        });
+
+        // Initialize First Slide
+        renderSlide();
+    </script>
+</body>
+</html>
